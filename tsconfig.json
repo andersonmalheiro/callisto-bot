@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "CommonJS",
+		"moduleResolution": "Node",
+		"lib": ["ESNext"],
+		"declaration": true,
+		"outDir": "./dist",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"isolatedModules": true,
+		"resolveJsonModule": true,
+		"paths": {
+			"@core": ["./src/core/"],
+			"@core/*": ["./src/core/*"],
+			"@commands/": ["./src/commands/"],
+			"@commands/*": ["./src/commands/*"],
+			"@interfaces": ["./src/interfaces"],
+			"@interfaces/*": ["./src/interfaces/*"],
+			"@events": ["./src/events/"],
+			"@events/*": ["./src/events/*"],
+			"@utils": ["./src/utils"],
+			"@utils/*": ["./src/utils/*"]
+		},
+	},
+	"include": ["**/*.ts"],
+	"exclude": ["node_modules", "dist"]
+}
