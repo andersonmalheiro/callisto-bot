@@ -10,3 +10,4 @@ services:
       NODE_ENV: production
       DISCORD_TOKEN: ${DISCORD_TOKEN}
       GUILD_ID: ${GUILD_ID}
+    restart: on-failure
