@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  callisto-bot:
+    image: callisto-bot
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      GUILD_ID: ${GUILD_ID}
