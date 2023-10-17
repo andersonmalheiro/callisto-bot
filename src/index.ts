@@ -1,4 +1,4 @@
-import client from '@core/client';
+import { client } from '@core/client';
 import { Events } from 'discord.js';
 import { config } from 'dotenv';
 import { onInteraction, onReady } from '@events';

@@ -1,4 +1,4 @@
-import { CommandList } from 'commands/commandList';
+import { CommandList } from '@commands/commandList';
 import { Interaction } from 'discord.js';
 
 const onInteraction = async (interaction: Interaction) => {
