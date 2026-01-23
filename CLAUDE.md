@@ -74,6 +74,9 @@ Required variables (loaded via dotenv):
 - `DISCORD_TOKEN` - Bot token from Discord Developer Portal
 - `GUILD_ID` - Discord server/guild ID where commands are registered
 
+Optional variables:
+- `TARGET_USER_IDS` - Comma-separated Discord user IDs for welcome audio (if empty, plays for all users)
+
 The `getEnv()` utility ([src/utils/functions/getEnv.ts](src/utils/functions/getEnv.ts)) asserts environment variables exist at runtime.
 
 ## Adding New Commands
@@ -84,7 +87,7 @@ The `getEnv()` utility ([src/utils/functions/getEnv.ts](src/utils/functions/getE
 
 ## Voice Features
 
-The bot plays custom audio when users join voice channels:
+The bot plays custom audio when specific users join voice channels:
 
 **Audio File Location:** Place audio files in the [audio/](audio/) directory (MP3, WAV, or OGG format)
 
@@ -92,11 +95,14 @@ The bot plays custom audio when users join voice channels:
 
 **Voice Dependencies:** Uses `@discordjs/voice` for audio playback with `libsodium-wrappers` for encryption
 
+**Target Users:** Set `TARGET_USER_IDS` env var with comma-separated Discord user IDs to limit audio playback to specific users. If not set, plays for all users.
+
 **How it Works:**
 1. User joins a voice channel (triggers VoiceStateUpdate event)
-2. Bot joins the same channel using `joinVoiceChannel`
-3. Bot plays the audio file using `createAudioPlayer` and `createAudioResource`
-4. Bot automatically disconnects after playback completes or after 5 seconds (safety timeout)
+2. Bot checks if user ID is in `TARGET_USER_IDS` (or plays for all if not configured)
+3. Bot joins the same channel using `joinVoiceChannel`
+4. Bot plays the audio file using `createAudioPlayer` and `createAudioResource`
+5. Bot automatically disconnects after playback completes or after 5 seconds (safety timeout)
 
 **Customizing Audio:** Modify the `audioPath` in [src/events/onVoiceStateUpdate.ts:46](src/events/onVoiceStateUpdate.ts#L46) to change which file is played
 

@@ -8,6 +8,7 @@ import {
 	entersState,
 	joinVoiceChannel,
 } from '@discordjs/voice';
+import { getEnv } from '@utils/functions/getEnv';
 import { ChannelType, VoiceState } from 'discord.js';
 import { join } from 'path';
 
@@ -22,6 +23,22 @@ const onVoiceStateUpdate = async (
 
 	// Ignore bot's own voice state changes
 	if (newState.member?.user.bot) return;
+
+	// Parse target user IDs from environment (comma-separated)
+	const targetUserIds =
+		getEnv('TARGET_USER_IDS')
+			?.split(',')
+			.map((id) => id.trim())
+			.filter(Boolean) || [];
+
+	// If target users configured, check if joining user is in the list
+	// If no targets configured, allow all users (fallback to original behavior)
+	if (
+		targetUserIds.length > 0 &&
+		!targetUserIds.includes(newState.member?.id || '')
+	) {
+		return;
+	}
 
 	if (userJoinedChannel) {
 		const channel = newState.channel;
